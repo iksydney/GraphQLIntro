@@ -1,5 +1,6 @@
 ﻿using GraphQLIntro.Data.Entities;
 using HotChocolate;
+using System.Linq;
 
 namespace GraphQLIntro.Data
 {
@@ -14,5 +15,6 @@ namespace GraphQLIntro.Data
         {
             return context.SuperHeroes;
         }
+
     }
 }

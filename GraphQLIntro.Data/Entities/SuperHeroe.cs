@@ -10,7 +10,11 @@ namespace GraphQLIntro.Data.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Height { get; set; }
+        [UseSorting]
+        [UseFiltering]
         public ICollection<Superpower>? Superpowers { get; set; }
+        [UseFiltering]
+        [UseSorting]
         public ICollection<Movie>? Movies { get; set; }
     }
 }
