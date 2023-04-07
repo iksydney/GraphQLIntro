@@ -1,6 +1,9 @@
+using GraphQL;
+using GraphQL.Client.Http;
 using GraphQL.Intro.Business.Repositories;
 using GraphQLIntro.Data;
 using GraphQLIntro.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLIntro
@@ -28,7 +31,11 @@ namespace GraphQLIntro
             services.AddScoped<ISuperPowerRepository, SuperPowerRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
 
-            services.AddGraphQLServer().AddQueryType<Query>;
+            services.AddGraphQLServer().AddQueryType<Query>()
+                //hotchocolate.data nugget manager was used to resolve this error
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting();
 
             var app = builder.Build();
 
@@ -36,14 +43,13 @@ namespace GraphQLIntro
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(); 
             }
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
-
             app.MapControllers();
+            app.MapGraphQL("/graphql");
 
             app.Run();
         }

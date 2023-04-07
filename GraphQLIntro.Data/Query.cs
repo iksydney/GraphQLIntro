@@ -1,14 +1,18 @@
 ﻿using GraphQLIntro.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HotChocolate;
 
 namespace GraphQLIntro.Data
 {
     public class Query
     {
-        public IQueryable<SuperHeroe> GetSuperHeroes => new List<SuperHeroe>().AsQueryable();
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+
+        //public IQueryable<SuperHeroe> GetSuperHeroes => new List<SuperHeroe>().AsQueryable();
+        public IQueryable<SuperHeroe> GetSuperheroes([Service] ApplicationDbContext context)
+        {
+            return context.SuperHeroes;
+        }
     }
 }
